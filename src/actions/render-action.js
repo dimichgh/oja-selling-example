@@ -2,13 +2,27 @@
 
 const Action = require('oja').Action;
 
-// assume here we had one template only, though in other cases it can be communicated or injected into the constructor if needed
-const template = require('./page-template.marko');
-
 module.exports = class RenderAction extends Action {
     execute() {
-        this.consume(['context', 'shipping-info', 'user-info', 'seller-info'], data => {
-            template.render(data, data.context);
+
+        this.consume([
+            'context',
+            'template',
+            'shipping-info',
+            'user-info',
+            'seller-info',
+            'item-details'], data => {
+
+            data.template.render(data, {
+                write(content) {
+                    data.context.write(content);
+                },
+
+                end() {
+                    data.context.end();
+                    this.define('render',  'complete');
+                }
+            });
         });
     }
 };

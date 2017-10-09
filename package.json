@@ -4,7 +4,7 @@
   "description": "Example of structuring app business logic using oja action",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha src/**/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,10 @@
   "dependencies": {
     "express": "^4.16.1",
     "marko": "^4.4.28",
-    "oja": "^1.0.1"
+    "oja": "^1.0.1",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
   }
 }

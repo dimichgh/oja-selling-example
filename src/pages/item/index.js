@@ -2,11 +2,13 @@
 
 const Action = require('oja').Action;
 
-const ItemDetailsAction = require('./item-details-action.js');
-const SellerInfoAction = require('./seller-info-action.js');
-const UserInfoAction = require('./user-info-action.js');
-const ShippingAction = require('./shipping-action.js');
-const RenderAction = require('./render-action.js');
+const ItemDetailsAction = require('../../actions/item-details-action.js');
+const SellerInfoAction = require('../../actions/seller-info-action.js');
+const UserInfoAction = require('../../actions/user-info-action.js');
+const ShippingAction = require('../../actions/shipping-info-action.js');
+const RenderAction = require('../../actions/render-action.js');
+
+const template = require('./index.marko');
 
 // compose the whole flow
 module.exports = class PageAction extends Action {
@@ -18,6 +20,7 @@ module.exports = class PageAction extends Action {
             new UserInfoAction(),
             new ShippingAction(),
             new RenderAction()
-        );
+        )
+        .define('template', template);
     }
 };

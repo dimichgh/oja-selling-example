@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+require('marko/node-require').install();
 
 const Context = require('./context');
 const PageAction = require('./page-action');
@@ -18,7 +19,7 @@ app.get('/item', (req, res) => {
     const page = new PageAction();
 
     // define context
-    page.define('context', new Context(req, res))
+    page.add(new Context(req, res))
         .timeout('render', 5000)
         .catch(err => {
             res.redirect('/error-page');

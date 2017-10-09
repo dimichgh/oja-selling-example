@@ -1,9 +1,17 @@
 'use strict';
 
-module.exports = class Context {
+const Action = require('oja').Action;
+
+module.exports = class Context extends Action {
     constructor(req, res) {
+        super();
+
         this.request = req;
         this.response = res;
+    }
+
+    execute() {
+        this.define('itemId', this.get('itemId'));
     }
 
     write(content) {

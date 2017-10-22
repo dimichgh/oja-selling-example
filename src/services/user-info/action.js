@@ -1,6 +1,6 @@
 'use strict';
 
-const userInfoSvc = require('../services/user-info-svc');
+const userInfoSvc = require('./service');
 const Action = require('oja').Action;
 
 class UserInfoAction extends Action {

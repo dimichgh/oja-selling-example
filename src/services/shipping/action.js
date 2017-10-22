@@ -1,6 +1,6 @@
 'use strict';
 
-const shippingInfoSvc = require('../services/shipping-svc');
+const shippingInfoSvc = require('./service');
 const Action = require('oja').Action;
 
 class SellerInfoAction extends Action {
@@ -8,7 +8,9 @@ class SellerInfoAction extends Action {
         this.consume(['seller-info', 'user-info'], data => {
             shippingInfoSvc.getShippingInfo(data['seller-info'].zip,
             data['user-info'].zip)
-                .then(data => this.define('shipping-info', data))
+                .then(data => {
+                    this.define('shipping-info', data);
+                })
                 .catch(err => this.define('shipping-info', {
                     error: err
                 }));

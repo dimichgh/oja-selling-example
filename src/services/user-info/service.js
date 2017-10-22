@@ -4,7 +4,14 @@ const request = require('request');
 
 module.exports.getUserInfo = function(userId) {
     return new Promise((resolve, reject) => {
-        request.get('http://user.info.service.com/v1/user-info', function(err, response) {
+        request({
+            url: 'https://api.github.com/repos/dimichgh/oja-selling-example/contents/mock-data/user-info.json',
+            headers: {
+                'Accept': 'application/vnd.github.VERSION.raw',
+                'User-Agent': 'service-agent/1.0.0'
+            }
+        },
+        function(err, response) {
             if (err) {
                 return reject(err);
             }
@@ -13,7 +20,7 @@ module.exports.getUserInfo = function(userId) {
                 err.statusCode = response.statusCode;
                 return reject(err);
             }
-            resolve(response.body);
+            resolve(JSON.parse(response.body));
         });
     });
 };

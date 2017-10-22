@@ -4,7 +4,14 @@ const request = require('request');
 
 module.exports.getShippingInfo = function(zipOrig, zipDest) {
     return new Promise((resolve, reject) => {
-        request.get(`http://shipping.info.service.com/v1/shipping-info?zipOrig=${zipOrig}&zipDest=${zipDest}`, function(err, response) {
+        request({
+            url: 'https://api.github.com/repos/dimichgh/oja-selling-example/contents/mock-data/shipping-info.json',
+            headers: {
+                'Accept': 'application/vnd.github.VERSION.raw',
+                'User-Agent': 'service-agent/1.0.0'
+            }
+        },
+        function(err, response) {
             if (err) {
                 return reject(err);
             }
@@ -13,7 +20,7 @@ module.exports.getShippingInfo = function(zipOrig, zipDest) {
                 err.statusCode = response.statusCode;
                 return reject(err);
             }
-            resolve(response.body);
+            resolve(JSON.parse(response.body));
         });
     });
 };

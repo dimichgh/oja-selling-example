@@ -4,8 +4,9 @@ const express = require('express');
 const app = express();
 require('marko/node-require').install();
 
-const Context = require('./context');
-const PageAction = require('./page-action');
+const Context = require('./src/common/context');
+const ItemPageAction = require('./src/pages/item');
+// const ErrorPageAction = require('./src/pages/error');
 
 /*
     This page should show product page on an imaginary shopping site.
@@ -16,16 +17,27 @@ const PageAction = require('./page-action');
     - Shipping rates obtained from shippipng service using buyer's and seller's locations.
   */
 app.get('/item', (req, res) => {
-    const page = new PageAction();
+    const page = new ItemPageAction();
 
     // define context
     page.add(new Context(req, res))
-        .timeout('render', 5000)
+        .timeout('render', 1000)
         .catch(err => {
-            res.redirect('/error-page');
+            console.log('--->', err);
+            // res.redirect('/error');
         })
         .activate();
 });
+
+// app.get('/error', (req, res) => {
+//     new ErrorPageAction()
+//         .add(new Context(req, res))
+//         .timeout('render', 1000)
+//         .catch(err => {
+//             res.status(500).end('Server is down');
+//         })
+//         .activate();
+// });
 
 app.listen(8000, () => {
     console.log('The server is ready');

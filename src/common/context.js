@@ -11,7 +11,10 @@ module.exports = class Context extends Action {
     }
 
     execute() {
+        this.define('context', this);
         this.define('itemId', this.get('itemId'));
+        // assume we get user id from cookies or query parameters
+        this.define('userId', this.get('userId'));
     }
 
     write(content) {

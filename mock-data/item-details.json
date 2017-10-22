@@ -1,5 +1,6 @@
 {
     "id": 1234,
     "title": "item title",
-    "description": "some description"
+    "description": "some description",
+    "sellerId": "seller123"
 }

@@ -4,17 +4,18 @@ const itemDetailsSvc = require('./service');
 const Action = require('oja').Action;
 
 class ItemDetailsAction extends Action {
-    execute() {
-        this.consume('itemId', itemId => {
-            itemDetailsSvc.getItemDetails(itemId)
-                .then(data => {
-                    this.define('sellerId', data.sellerId);
-                    this.define('item-details', data);
-                })
-                .catch(err => this.define('item-details', {
-                    error: err
-                }));
-        });
+    async execute() {
+        try {
+            const itemId = await this.consume('itemId');
+            const details = await itemDetailsSvc.getItemDetails(itemId);
+            this.define('sellerId', details.sellerId);
+            this.define('item-details', details);
+        }
+        catch (err) {
+            this.define('item-details', {
+                error: err
+            });
+        }
     }
 }
 

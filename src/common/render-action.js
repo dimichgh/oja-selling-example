@@ -8,24 +8,24 @@ module.exports = class RenderAction extends Action {
         this.template = template;
     }
 
-    execute() {
+    async execute() {
         const _this = this;
-        this.consume([
+        const data = await this.consume([
             'model',
             'context'
-        ], data => {
-            this.template.render(data.model, {
-                write(content) {
-                    data.context.write(content);
-                },
+        ]);
 
-                end() {
-                    data.context.end();
-                    _this.define('render',  {
-                        status: 'end'
-                    });
-                }
-            });
+        this.template.render(data.model, {
+            write(content) {
+                data.context.write(content);
+            },
+
+            end() {
+                data.context.end();
+                _this.define('render',  {
+                    status: 'end'
+                });
+            }
         });
     }
 };

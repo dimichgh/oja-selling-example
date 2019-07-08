@@ -5,18 +5,14 @@ const request = require('request');
 module.exports.getShippingInfo = function(zipOrig, zipDest) {
     return new Promise((resolve, reject) => {
         request({
-            url: 'https://api.github.com/repos/dimichgh/oja-selling-example/contents/mock-data/shipping-info.json',
-            headers: {
-                'Accept': 'application/vnd.github.VERSION.raw',
-                'User-Agent': 'service-agent/1.0.0'
-            }
+            url: 'https://dimichgh.github.io/oja-selling-example/mock-data/shipping-info.json'
         },
         function(err, response) {
             if (err) {
                 return reject(err);
             }
             if (response.statusCode >= 400) {
-                err = new Error('Http Error');
+                err = new Error(`Http Error, status:${response.statusCode}`);
                 err.statusCode = response.statusCode;
                 return reject(err);
             }
